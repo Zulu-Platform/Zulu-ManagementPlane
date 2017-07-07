@@ -1,0 +1,46 @@
+@startuml
+
+title <b><size:45>Web Activity Diagram</size></b>
+
+skinparam activityArrowFontColor #777777
+skinparam FontColor Black
+
+start
+
+#73A0DC:Web]
+-> <b>RPC</b>;
+#YellowGreen:Apache|
+-> <b>RPC</b>;
+#YellowGreen:Tomcat|
+
+-> <b>PAM call</b>;
+if (Authorization?) then
+	-> <b><color:#777777> D-Bus call </color> <color:green> Success </color></b>;
+	#6CFFAE:Controller messages|
+
+	if (Storage) then
+		-> <b><color:#777777> Storage call </color></b>;
+		#6CFFAE:Storage disk]
+		end
+	elseif (Kernel) then
+		-> <b><color:#777777> Kernel call </color></b>;
+		#6CFFAE:Kernel space]
+		end
+	elseif (Control) then 
+		-> <b><color:#777777> D-Bus call </color></b>;
+		#6CFFAE:Control daemon]
+		end
+	else
+		-[#red]-> <b><color:red> Error </color></b>;
+		#73A0DC:Return error;
+		-[#red]->
+		end
+	endif
+else
+	-[#red]-> <b><color:red> Fail </color></b>;
+	#73A0DC:Redirect Authorization Page;
+	-[#red]->
+	end
+endif
+
+@enduml

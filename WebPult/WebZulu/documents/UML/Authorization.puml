@@ -1,0 +1,34 @@
+@startuml
+
+title <b><size:45>Authorization</size></b>
+
+actor User
+participant "Web container\n(Servlet)" as wc << (S, YellowGreen) >>
+participant "Data Bus" as db << (K, #AAC8EB) >>
+participant "SysLog" as sl << (L, Orange) >>
+
+User -[#Green]> wc: Data Request
+activate wc
+    group JAAS
+
+        wc -[#Green]> wc: Validation \nTocken
+        wc -[#Green]> wc: Validation \nUser
+        wc -[#Green]> wc: Validation \nRequest
+
+        wc -[#Green]> db: Data Request
+        activate wc #Green
+            activate db
+                db -[#Green]-> wc: Data
+            deactivate db
+            wc -[#Green]-> User: View Data
+        deactivate wc
+
+        wc -[#Red]-> wc: Validation failed
+        activate wc #Red
+            wc -[#Orange]> sl : Access denied (Name, Time)
+            wc -[#Red]-> User : Access denied
+        deactivate wc
+    end
+deactivate wc
+
+@enduml

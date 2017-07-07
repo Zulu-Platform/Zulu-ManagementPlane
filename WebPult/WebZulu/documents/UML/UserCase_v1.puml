@@ -1,0 +1,51 @@
+@startuml
+
+title <b><size:45>Usercase Diagram</size></b>
+
+User << User >>
+(Start) << Site >>
+(Request) << Get any data >>
+agent "Remote Procedure Call" as RPC
+
+(Tomcat) << Application server >>
+(SSH) << SSH server >>
+(SNMP) << SNMP server >>
+(Telnet) << Telnet server >>
+
+cloud "Data bus" as D_Bus1
+
+(Controller messages) << Диспечер сообщений >>
+
+(Managment) << Managment plane >>
+(PAM) << Authentification data >>
+(ZULU) << Control daemon >>
+
+agent "I2C" as I2C
+(Control) << Control plane >>
+(Data) << Data plane >>
+
+/' ===== ===== ===== ===== ===== ===== ===== '/
+
+User -> (Start)
+(Start) <-- RPC
+RPC --> (Request)
+
+(Request) -> (Tomcat)
+
+(Tomcat) -(0)- D_Bus1
+(SSH) -(0)- D_Bus1
+(SNMP) -(0)- D_Bus1
+(Telnet) -(0)- D_Bus1
+
+D_Bus1 -(0)- (Controller messages)
+D_Bus1 -(0)- (ZULU)
+
+
+(Controller messages) <--> (Managment)
+(Controller messages) <--> (PAM)
+
+(ZULU) <-- I2C
+I2C --> (Control)
+(Control) <--> (Data)
+
+@enduml
