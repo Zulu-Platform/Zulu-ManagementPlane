@@ -1,9 +1,0 @@
-@startuml
-
-package ru.zulu.shared {
-}
-
-package ru.zulu.shared.db {
-}
-
-@enduml
