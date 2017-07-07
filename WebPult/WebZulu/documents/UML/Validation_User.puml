@@ -1,0 +1,28 @@
+@startuml
+
+title <b><size:45>Validation User</size></b>
+
+participant "RemoteServiceServlet" as rss << (C, #ADD1B2) >>
+participant "SysLog" as sl << (L, Orange) >>
+
+[-[#Green]> rss: Data Request
+activate rss
+	
+	rss -[#Green]> rss: Get UserInfo from SessionClient
+	rss -[#Green]> rss: Get UserInfo from SessionServer
+	
+	rss -[#Green]> rss: <b><color:#777777> Validation Users </color></b> \n <b><color:#Green> True </color></b>
+	activate rss #Green
+		create Validation_Request
+		rss -[#Green]> Validation_Request : Access success
+	deactivate rss
+	
+	rss -[#Red]> rss: <b><color:#777777> Validation Users </color></b> \n <b><color:#Red> False </color></b>
+	activate rss #Red
+		rss -[#Orange]> sl : User Failure (Name, Time)
+		[<[#Red]- rss: Access denied
+	deactivate rss
+	
+deactivate rss
+
+@enduml

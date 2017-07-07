@@ -1,0 +1,55 @@
+@startuml
+
+title <b><size:45>Web Usercase Diagram</size></b>
+
+skinparam usecase {
+	BackgroundColor #6CFFAE
+	BorderColor Black
+	
+	BackgroundColor<<Site>> #73A0DC
+
+	BackgroundColor<<Application server>> YellowGreen
+
+	ArrowColor Green
+	ArrowFontName Impact
+	ArrowFontColor #777777
+}
+
+skinparam cloud {
+	BackgroundColor White
+	BorderColor Black
+}
+
+
+User << User >>
+(Web) << Site >>
+
+(Tomcat) << Application server >>
+
+(PAM) << Authorization data >>
+
+cloud "Data bus" as D_Bus
+
+(Messages) << Controller messages >>
+
+(Managment) << Managment plane >>
+(Kernel) << Kernel space >>
+(Storage) << Storage disk >>
+(ZULU) << Control daemon >>
+
+
+User --> (Web)
+(Web) <--> (Tomcat) : RPC
+
+(Tomcat) - PAM
+(Tomcat) .(0). D_Bus
+
+D_Bus .(0). (Messages)
+
+(Messages) <-> (ZULU)
+(Messages) <--> (Managment)
+
+(Managment) <--> (Kernel)
+(Managment) <--> (Storage)
+
+@enduml

@@ -1,0 +1,17 @@
+/* 
+    Created on : 26.09.2014, 10:23:59
+    Author     : Носов А.В.
+*/
+
+.headerPadding {
+    padding: 5px 50px;
+}
+
+.buttonExit {
+    color: rgb(15, 107, 221);
+    font-size: smaller;
+    background: none repeat scroll 0% 0% white;
+    border: medium none;
+    text-decoration: underline;
+    cursor: pointer;
+}

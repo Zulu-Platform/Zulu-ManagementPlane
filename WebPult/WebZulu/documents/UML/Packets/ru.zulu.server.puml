@@ -1,0 +1,21 @@
+@startuml
+
+package ru.zulu.server {
+}
+
+package ru.zulu.server.exceptions {
+}
+
+package ru.zulu.server.services {
+}
+
+package ru.zulu.server.services.db {
+}
+
+package ru.zulu.server.services.db.logic {
+}
+
+package ru.zulu.server.utils {
+}
+
+@enduml

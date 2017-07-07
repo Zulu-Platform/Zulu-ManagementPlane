@@ -1,0 +1,81 @@
+@startuml
+
+title <b><size:45>Authentication</size></b>
+
+actor User
+participant "Web container\n(Servlet)" as wc << (S, YellowGreen) >>
+participant "LoginContext" as lc << (C, #ADD1B2) >>
+participant "LoginModule" as lm << (C, #ADD1B2) >>
+participant "PAM" as pam << (K, #AAC8EB) >>
+participant "SysLog" as sl << (L, Orange) >>
+
+User -[#green]> wc: Authentication Request
+activate wc
+
+group JAAS
+    wc -[#green]> lc : Authentication data
+    activate lc
+    
+    lc -[#green]> lm : initialization();
+    activate lm
+    deactivate lm
+    note right
+        Подготовка
+        объекта
+        аутентификации
+    end note
+
+    lc -[#green]> lm : login();
+    activate lm
+    note right
+        Аутентификаця
+        пользователя 
+    end note
+    
+    group PAM
+        lm -[#green]> pam : authenticate();
+        activate pam
+            pam -[#Red]-> lm : failed
+            activate lm #Red
+            pam -[#Green]-> lm : succeeded
+        deactivate pam
+        activate lm #Green
+    end
+    
+    lm -[#green]-> lc : succeeded
+    activate lc #green
+    lc -[#green]> lm : commit();
+    note right
+        Информация
+        о пользователе
+    end note
+    
+    lm -[#green]-> lc : User
+    deactivate lm
+    lc -[#orange]> sl : Save Auth succeeded (Name, Time)
+    lc -[#blue]> lc : Concat \nsession & \nUser
+    lc -[#green]-> wc : User
+    deactivate lc 
+    
+    wc -[#green]-> User : Authentication Accepted
+    activate lc #Red
+    lm -[#Red]-> lc : failed
+    lc -[#Red]> lm : aborted();
+    note right
+        Освобождает
+        все ресурсы
+    end note
+    deactivate lm
+    deactivate lm
+    lc -[#orange]> sl : Save Auth failed (Name, Time)
+    lc -[#Red]-> wc : NULL
+    deactivate lc
+    deactivate lc
+
+    deactivate lm
+
+    wc -[#red]-> User : Authentication Fail
+    deactivate wc
+end
+
+@enduml

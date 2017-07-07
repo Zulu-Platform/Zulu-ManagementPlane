@@ -1,0 +1,6 @@
+@startuml
+
+package ru.zulu.client.utils {
+}
+
+@enduml

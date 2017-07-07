@@ -1,0 +1,33 @@
+@startuml
+
+title <b><size:45>Validation Tocken</size></b>
+
+participant "RemoteServiceServlet" as rss << (C, #ADD1B2) >>
+participant "HttpSessionCollector" as hsc << (C, #ADD1B2) >>
+participant "SysLog" as sl << (L, Orange) >>
+
+[-[#Green]> rss: Data Request
+activate rss
+	
+	rss -[#Green]> rss: Get Session ID_client
+	
+        rss -[#Green]> hsc: Get Session by ID_client
+	activate hsc
+	hsc -[#Green]> rss: Session
+	deactivate hsc
+	
+	rss -[#Green]> rss: <b><color:#777777> Validation Tockens </color></b> \n <b><color:#Green> True </color></b>
+	activate rss #Green
+		create Validation_User
+		rss -[#Green]> Validation_User : Access success
+	deactivate rss
+	
+	rss -[#Red]> rss: <b><color:#777777> Validation Tockens </color></b> \n <b><color:#Red> False </color></b>
+	activate rss #Red
+		rss -[#Orange]> sl : Tocken Failure (Name, Time)
+		[<[#Red]- rss: Access denied
+	deactivate rss
+	
+deactivate rss
+
+@enduml
