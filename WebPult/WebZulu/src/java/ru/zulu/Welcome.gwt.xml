@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.7.0//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.7.0/distro-source/core/src/gwt-module.dtd">
+
+<module rename-to="zulu">
+    <inherits name="com.google.gwt.user.User"/>
+    <inherits name="com.google.web.bindery.autobean.AutoBean"/>
+    <inherits name="com.google.gwt.activity.Activity"/>
+    <inherits name="com.google.gwt.place.Place"/>
+    <inherits name="libMessage.LibMessage"/>
+    
+    <!--<inherits name='com.google.gwt.user.theme.clean.Clean'/>-->
+    <inherits name='com.sencha.gxt.ui.GXT'/>
+    <!--<inherits name='com.sencha.gxt.chart.Chart' />-->
+    <inherits name="com.sencha.gxt.theme.neptune.Theme" />
+    <!--<inherits name='com.sencha.gxt.theme.blue.Blue'/>-->
+    
+    <!-- Locale -->
+    <!--<inherits name='com.google.gwt.i18n.I18N'/>
+    <extend-property name="locale" values="ru"/>-->
+    <!-- -Xms1024M -Xmx1024M -XX:MaxPermSize=512M -Xss512K -->
+    
+    <inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />
+    <set-property name="log_ConsoleLogger" value="ENABLED" />
+    <set-property name="log_DivLogger" value="DISABLED" />
+    <set-property name="log_GWTLogger" value="DISABLED" />
+    <set-property name="log_SystemLogger" value="DISABLED" />
+    <set-property name="log_WindowLogger" value="DISABLED" />
+    <set-configuration-property name="log_pattern" value="%d{ABSOLUTE} %5p %t %c{1}:%M:%L - %m%n" />
+    <!--
+    <inherits name="com.google.gwt.uibinder.UiBinder"/>
+    -->
+    <entry-point class="ru.zulu.client.WelcomeEntryPoint"/>
+    <replace-with class="ru.zulu.client.gui.ClientFactoryImpl">
+    	<when-type-is class="ru.zulu.client.gui.IClientFactory" />
+    </replace-with>
+    
+    <!-- Do not define servlets here, use web.xml -->
+    <source path='client'/>
+    <!--<source path='shared'/>-->
+</module>

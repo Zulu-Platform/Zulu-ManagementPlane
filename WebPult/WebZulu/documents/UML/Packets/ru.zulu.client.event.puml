@@ -1,0 +1,57 @@
+@startuml
+
+package ru.zulu.client.event {
+    class ErrorEvent<extends GwtEvent<ErrorEventHandler>> {
+    }
+    interface ErrorEventHandler<extends EventHandler> {
+    }
+    class GroupByIdEvent<extends GwtEvent<GroupByIdEventHandler>> {
+    }
+    interface GroupByIdEventHandler<extends EventHandler> {
+    }
+    class GroupsListEvent<extends GwtEvent<GroupsListEventHandler>> {
+    }
+    interface GroupsListEventHandler<extends EventHandler> {
+    }
+    class LoginEvent<extends GwtEvent<LoginEventHandler>> {
+    }
+    interface LoginEventHandler<extends EventHandler> {
+    }
+    class SuccessEvent<extends GwtEvent<SuccessEventHandler>> {
+    }
+    interface SuccessEventHandler<extends EventHandler> {
+    }
+    class SystemsSettingsEvent<extends GwtEvent<SystemsSettingsEventHandler>> {
+    }
+    interface SystemsSettingsEventHandler<extends EventHandler> {
+    }
+    class TxMessageEvent<extends GwtEvent<TxMessageEventHandler>> {
+    }
+    interface TxMessageEventHandler<extends EventHandler> {
+    }
+    class UserBuIdEvent<extends GwtEvent<UserBuIdEventHandler>> {
+    }
+    interface UserBuIdEventHandler<extends EventHandler> {
+    }
+    class UsersListEvent<extends GwtEvent<UsersListEventHandler>> {
+    }
+    interface UsersListEventHandler<extends EventHandler> {
+    }
+    class Event<extends GwtEvent<EventHandler>> {
+    }
+    interface EventHandler<extends EventHandler> {
+    }
+
+    ErrorEventHandler <|-- ErrorEvent
+    GroupByIdEventHandler <|-- GroupByIdEvent
+    GroupsListEventHandler <|-- GroupsListEvent
+    LoginEventHandler <|-- LoginEvent
+    SuccessEventHandler <|-- SuccessEvent
+    SystemsSettingsEventHandler <|-- SuccessEvent
+    TxMessageEventHandler <|-- TxMessageEvent
+    UserByIdEventHandler <|-- UserByIdEvent
+    UsersListEventHandler <|-- UsersListEvent
+    EventHandler <|-- Event
+}
+
+@enduml

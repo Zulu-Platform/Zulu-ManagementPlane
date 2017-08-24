@@ -1,0 +1,29 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:my='urn:import:ru.zulu.client.gui.views'>
+    <ui:style>
+        .panels {
+            background-position: center center;
+            height: 100%;
+            width: 100%;
+            border: 1px solid gray;
+        }
+    </ui:style>
+    <g:DockLayoutPanel unit='PX'>
+        <g:north size="75">
+            <my:HeaderViewImpl ui:field="headerView"/>
+        </g:north>
+        <g:center>
+            <g:SplitLayoutPanel ui:field="splitLayoutPanel" addStyleNames="{style.panels}">
+                <g:center>
+                    <g:ScrollPanel>
+                        <g:SimplePanel ui:field="mainPanel"/>
+                    </g:ScrollPanel>
+                </g:center>
+                <g:west size="200">
+                    <my:MenuViewImpl ui:field="menuView"/>
+                </g:west>
+            </g:SplitLayoutPanel>
+        </g:center>
+    </g:DockLayoutPanel>
+</ui:UiBinder>

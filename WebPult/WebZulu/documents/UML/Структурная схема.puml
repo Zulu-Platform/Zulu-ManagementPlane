@@ -1,0 +1,54 @@
+@startuml
+
+start
+
+partition "Отперационная система" {
+    :Программа \nначальной загрузки;
+    :Программы \nуправления файлами и \nпланирования заданий;
+    fork
+        :Программы управления \nвводом/выводом;
+    fork again
+        :Драйвер управления \nоперативной памятью;
+    fork again
+        partition "Драйверы" {
+            fork
+            :Драйвер жесткого \nдиска;
+            fork again
+            :Драйвер гибких \nдисков;
+            fork again
+            :Сетевой драйвер;
+            end fork
+        }
+    end fork
+}
+
+partition "Системные программы" {
+    :Программы контроля, тестирования и диагностики;
+    fork
+        :HTTP сервер;
+    fork again
+        :Telnet сервер;
+    fork again
+        :syslog сервер;
+    fork again
+        :SSH сервер;
+    fork again
+        :SNMP сервер;
+    fork again
+        :Контейнер сервлетов;
+    fork again
+        :Система управления БД;
+    end fork
+}
+
+partition "Прикладные программы" {
+    fork
+        :Web сайт;
+    fork again
+        :Hibernate;
+    end fork
+}
+
+stop
+
+@enduml

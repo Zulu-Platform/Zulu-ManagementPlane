@@ -1,0 +1,14 @@
+@startuml
+
+Alice -> Bob : message 1
+Alice -> Bob : message 2
+
+newpage
+Alice1 -> Bob1 : message 3
+Alice1 -> Bob1 : message 4
+
+newpage A title for the\nlast page
+Alice2 -> Bob2 : message 5
+Alice2 -> Bob2 : message 6
+
+@enduml

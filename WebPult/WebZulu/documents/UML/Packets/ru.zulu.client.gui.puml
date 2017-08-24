@@ -1,0 +1,24 @@
+@startuml
+
+package ru.zulu.client.gui {
+}
+
+package ru.zulu.client.gui.activity {
+}
+
+package ru.zulu.client.gui.mappaer {
+}
+
+package ru.zulu.client.gui.places {
+}
+
+package ru.zulu.client.gui.stocks {
+}
+
+package ru.zulu.client.gui.types {
+}
+
+package ru.zulu.client.gui.views {
+}
+
+@enduml

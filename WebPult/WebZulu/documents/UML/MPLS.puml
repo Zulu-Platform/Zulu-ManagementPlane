@@ -1,0 +1,152 @@
+@startuml
+
+usecase (MPLS)
+usecase (Interfase)
+
+/' Механизм выделения меток '/
+usecase (Механизм \nвыделения \nметок) as Stream
+usecase (Downstream \nUnsolicited) as DU
+note left of (DU)
+    Как только маршрутизатор узнает 
+    про метки, то сразу начинает их
+    растространять.
+end note
+usecase (Downstream-\non-Demand) as DoD
+note right of (DoD)
+    Пока маршрутизатор не спросят про
+    метки, он молчит.
+end note
+/' ===== ===== ===== ===== ===== ===== ===== '/
+
+/' Механизм распространения меток '/
+usecase (Механизм \nраспространения \nметок) as Control
+usecase (Ordered Control) as OC
+note right of (OC)
+    Маршрутизатор рассылает метки о соседях
+    только после того как метка данного соседа 
+    придет к нему.
+end note
+usecase (Independent Control) as IC
+note left of (IC)
+    Сразу рассылает метки о соседях, еще до того
+    как договорится с ним.
+end note
+/' ===== ===== ===== ===== ===== ===== ===== '/
+
+/' Метод хранения меток '/
+usecase (Метод \nхранения \nметок) as Mode
+usecase (Liberal Label \nRetention Mode) as LLRM
+note right of (LLRM)
+    Метки сохраняются.
+end note
+usecase (Conservative Label \nRetention Mode) as CLRM
+note left of (CLRM)
+    Лишняя метка отбрасывается сразу, 
+    как она получена.
+end note
+/' ===== ===== ===== ===== ===== ===== ===== '/
+
+/' Способ построения пути '/
+usecase (Построение \nпути) as Path
+
+usecase (Explicit NULL) as Exp
+note left of (Exp)
+    Метку MPLS снимает последний 
+    маршрутизатор в цепочки. Это позволяет 
+    не потерять приоритет, заданный в 
+    поле TC заголовка MPLS.
+end note
+
+usecase (Implicit Null) as Imp
+note right of (Imp)
+    Метку MPLS снимает предпоследний 
+    маршрутизатор. Пакет передается в 
+    нужный интерфейс на следующий 
+    коммутатор, но оконечный коммутатор 
+    получает уже чистый IP
+end note
+/' ===== ===== ===== ===== ===== ===== ===== '/
+
+/' Протоколы распространения меток '/
+usecase (Protocol)
+usecase (LDP)
+note left of (LDP)
+    Транспортная метка.
+    Labed Distribution Protocol.
+    Опирается на маршрутную 
+    информацию узлов.
+end note
+
+usecase (RSVP-TE)
+note left of (RSVP-TE)
+    Транспортная метка.
+    Resource ReSerVation Protocol 
+    for Traffic Engineering.
+    Опирается на топологию сети удовлетворяющую 
+    определенным условиям. Для его работы нужны:
+    OSPF, ISIS, IGP.
+end note
+
+usecase (MBGP)
+note left of (MBGP)
+    Сервисная метка.
+    Опирается на BGP. Как пример:
+    MBGP позволяет, например, пометить, 
+    что вот такой-то маршрут принадлежит 
+    такому-то VPN. Потом он этот маршрут 
+    передаёт, как vpn-ipv4 family своему 
+    соседу с меткой, чтобы тот смог 
+    потом отделить мух от котлет.
+end note
+/' ===== ===== ===== ===== ===== ===== ===== '/
+
+/' Протоколы распространения меток '/
+usecase (Traffic Engineering)
+usecase (OSPF)
+note left of (OSPF)
+    Opaque SPF.
+end note
+
+usecase (ISIS)
+note left of (ISIS)
+    ISIS.
+end note
+
+usecase (IGP)
+note left of (IGP)
+    IGP.
+end note
+/' ===== ===== ===== ===== ===== ===== ===== '/
+
+(MPLS) --> (Interfase)
+(Interfase) --> (Stream)
+
+(Stream) --> (DU)
+(Stream) --> (DoD)
+(DU) --> (Control)
+(DoD) --> (Control)
+
+(Control) --> (OC)
+(Control) --> (IC)
+(OC) --> (Mode)
+(IC) --> (Mode)
+
+(Mode) --> (LLRM)
+(Mode) --> (CLRM)
+(LLRM) --> (Path)
+(CLRM) --> (Path)
+
+(Path) --> (Exp)
+(Path) --> (Imp)
+(Exp) --> (Protocol)
+(Imp) --> (Protocol)
+
+(Protocol) --> (LDP)
+(Protocol) --> (RSVP-TE)
+(Protocol) --> (MBGP)
+
+(RSVP-TE) --> (OSPF)
+(RSVP-TE) --> (ISIS)
+(RSVP-TE) --> (IGP)
+
+@enduml

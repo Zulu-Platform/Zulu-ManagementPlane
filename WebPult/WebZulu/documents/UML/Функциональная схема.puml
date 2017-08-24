@@ -1,0 +1,42 @@
+@startuml
+
+"Web сайт \n(html)" as (html)
+"HTTP Сервер \n(Apache)" as [apache]
+"БД \n(MySQL)" as [mysql]
+"ORM Hibernate" as [orm]
+"Контейнер сервлетов\n(tomcat, java)" as [tomcat]
+"ZuluCLI \n(Консоль управления)" as [cli]
+"Syslog сервер" as [syslog]
+"Zulud \n(Демон управления)" as [zulud]
+"Zebrad" as [zebrad]
+"FPGA \nДрайвер PCI-E" as [fpga]
+"bgpd" as [bgpd]
+"ospfd" as [ospfd]
+"isisd" as [isisd]
+"ripd" as [ripd]
+
+[html] <-down-> [apache] : GWT RPC
+[apache] <-down-> [tomcat] : GWT RPC
+[tomcat] -down-> [syslog] : Syslog
+
+'[mysql] <-right-> [orm] : SQL
+'[orm] <-right-> [tomcat] : Java objects
+'[orm] <-down-> [cli] : Java objects
+
+'[mysql] --> [syslog] : Syslog
+'[orm] --> [syslog] : Syslog
+'[cli] --> [syslog] : Syslog
+
+'[tomcat] <-right-> [zulud] : TCP
+'[zulud] --> [syslog] : Syslog
+
+'[zulud] <-right-> [fpga] : PCI-E
+
+'[zulud] <-down-> [zebrad] : TCP
+'[zebrad] <--> [bgpd]
+'[zebrad] <--> [ospfd]
+'[zebrad] <--> [isisd]
+'[zebrad] <--> [ripd]
+'[zebrad] --> [syslog] : Syslog
+
+@enduml
